@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEX Hardware | Premium Cabinet & Cupboard Components</title>
+    <style>
+        :root {
+            --bg-dark: #0a0b0d;
+            --card-bg: #14171c;
+            --accent-gold: #d4af37;
+            --accent-neon: #ffb700;
+            --text-main: #f0f2f5;
+            --text-muted: #8a94a6;
+            --border-glow: rgba(212, 175, 55, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cabinet Grotesk', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding: 2rem;
+            line-height: 1.5;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ffffff, var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--text-muted);
+            color: var(--text-main);
+            padding: 0.75rem 1.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--accent-neon);
+            color: var(--bg-dark);
+            background-color: var(--accent-neon);
+            box-shadow: 0 0 20px rgba(255, 183, 0, 0.4);
+        }
+
+        .showroom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .product-visual {
+            height: 180px;
+            background: linear-gradient(135deg, #1e222b, #111318);
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .product-visual::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-gold);
+            opacity: 0.08;
+            border-radius: 50%;
+            filter: blur(10px);
+        }
+
+        .product-visual span {
+            font-size: 3rem;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-spec {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .spec-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+
+        .spec-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Apex Hardware</h1>
+        <p>Architectural Cupboard Fittings & Luxury Mechanical Components</p>
+    </header>
+
+    <div class="filter-container">
+        <button class="filter-btn active" data-category="all">All Components</button>
+        <button class="filter-btn" data-category="handles">Handles & Pulls</button>
+        <button class="filter-btn" data-category="hinges">Heavy Duty Hinges</button>
+        <button class="filter-btn" data-category="runners">Drawer Runners</button>
+    </div>
+
+    <main class="showroom-grid" id="showroom"></main>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "Aero-Knurled T-Bar",
+                category: "handles",
+                spec: "Solid Brass • Matte Obsidian Finish • 160mm",
+                price: "$42.00",
+                icon: "📐"
+            },
+            {
+                id: 2,
+                name: "Quantum 110° Soft-Close",
+                category: "hinges",
+                spec: "Hydraulic Dampening • Triple Plated Steel",
+                price: "$18.50",
+                icon: "⚙️"
+            },
+            {
+                id: 3,
+                name: "Stealth Glide Touch-Release",
+                category: "runners",
+                spec: "Full Extension • 45kg Load Capacity • 450mm",
+                price: "$65.00",
+                icon: "🛷"
+            },
+            {
+                id: 4,
+                name: "Monolith Square Pull",
+                category: "handles",
+                spec: "Brushed Champagne Gold • Forged Aluminum",
+                price: "$58.00",
+                icon: "🧱"
+            },
+            {
+                id: 5,
+                name: "Apex Pivot Hinge 360",
+                category: "hinges",
+                spec: "Invisibly Integrated • Reinforced Stainless",
+                price: "$89.00",
+                icon: "🔄"
+            },
+            {
+                id: 6,
+                name: "Titan Dual-Synchronized Rail",
+                category: "runners",
+                spec: "Industrial Grade • Progressive Movement",
+                price: "$120.00",
+                icon: "📏"
+            }
+        ];
+
+        const showroom = document.getElementById('showroom');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        function renderProducts(itemsToDisplay) {
+            showroom.innerHTML = '';
+
+            itemsToDisplay.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.setAttribute('data-category', product.category);
+
+                card.innerHTML = `
+                    <div>
+                        <div class="product-visual">
+                            <span>${product.icon}</span>
+                        </div>
+                        <div class="product-category">${product.category}</div>
+                        <h2 class="product-title">${product.name}</h2>
+                        <p class="product-spec">${product.spec}</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">${product.price}</span>
+                        <button class="spec-btn" type="button" onclick="alert('Viewing blueprint specs for ${product.name}')">Specs</button>
+                    </div>
+                `;
+
+                showroom.appendChild(card);
+            });
+        }
+
+        function filterCategory(category) {
+            filterButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.category === category);
+            });
+
+            if (category === 'all') {
+                renderProducts(products);
+            } else {
+                renderProducts(products.filter(p => p.category === category));
+            }
+        }
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => filterCategory(button.dataset.category));
+        });
+
+        renderProducts(products);
+    </script>
+</body>
+</html>
